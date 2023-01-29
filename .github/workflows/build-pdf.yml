@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 17
       - run: mkdir -p dist
-      - run: npm install md-to-pdf
+      - run: npm install md-to-pdf jszip
       - run: node build/build.js
       - uses: actions/upload-artifact@v1
         with:
@@ -24,6 +24,10 @@ jobs:
         with:
           name: book.pdf
           path: dist/book.pdf    
+      - uses: actions/upload-artifact@v1
+        with:
+          name: pages.zip
+          path: dist/pages.zip
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -32,3 +36,4 @@ jobs:
           files: |
             dist/book.pdf
             dist/book.md
+            dist/pages.zip
